@@ -43,6 +43,7 @@ function break1(target){
 
 	//store input values from form in an array 
 function addToArray(){
+	console.log(document.getElementById(1000+1).value);
 	var objProduct=new Object();
 	var ids;
 	if(qu.length==0)
@@ -54,19 +55,23 @@ function addToArray(){
 	objProduct.negative=document.getElementById("ngtv").value;
 	objProduct.title=document.getElementById("title").value;
 	objProduct.quest=document.getElementById("quest").value;
-	objProduct.op1=document.getElementById("option1").value;
-	objProduct.op2=document.getElementById("option2").value;
+	
 	var child=newdv.childNodes;
-	for(var i=1;i<child.length;i++){
+	console.log(child.length);
+	for(var i=0;i<child.length;i++){
 		var ob=new Object();
-		ob.id=ids;
-		if(i%2!=0)
-			ob.opt=child[i].innerHTML;
+		ob.Qid=ids;
+		var uid;
+		if(opt.length==0)
+			uid=1;
 		else
-			ob.opt=child[i].innerHTML;
+			uid=opt[opt.length-1].uid+1;
+		ob.uid=uid;
+		console.log(document.getElementById(1000+i).value);
+		ob.optnz=document.getElementById(1000+i).value;
+		opt.push(ob);
+		storeOp(opt);
 	}
-	opt.push(ob);
-	storeOp(opt);
 	qu.push(objProduct); //push values stored in object in array
 	store(qu);  //save array in browser local storage
        		
@@ -143,65 +148,89 @@ function addToArray(){
 
 		break1(div);
 		
-		var newdv=document.createElement("div");
-		newdv.setAttribute("id","opt");
+	
 		var an=document.createElement("button");
 		an.innerHTML="Add More Option";
 		an.setAttribute("id","anch");
-		newdv.appendChild(an);
-		break1(newdv);
+		div.appendChild(an);
+		break1(div);
+		
+		var newdv=document.createElement("div");
+		newdv.setAttribute("id","opt");
+		
+		var dvt=document.createElement("div");
+		dvt.setAttribute("id","1");
 		var inptQuantity=document.createElement("input");
 		inptQuantity.setAttribute("type","text");
-		inptQuantity.setAttribute("id","option1");
+			inptQuantity.setAttribute("id",1000);
 		inptQuantity.setAttribute("placeholder","Enter Option");
-		newdv.appendChild(inptQuantity);
+		dvt.appendChild(inptQuantity);
+	
+
 		var radioB=document.createElement("input");
         radioB.setAttribute("type","checkbox");
-		newdv.appendChild(radioB);
-		break1(newdv);
+		dvt.appendChild(radioB);
+		break1(dvt);
+		newdv.appendChild(dvt);
+		
+		
+		var dvt=document.createElement("div");
+		dvt.setAttribute("id","2");
 		var inptQuantity=document.createElement("input");
 		inptQuantity.setAttribute("type","text");
-		inptQuantity.setAttribute("id","option2");
+			inptQuantity.setAttribute("id",1001);
 		inptQuantity.setAttribute("placeholder","Enter Option");
-		newdv.appendChild(inptQuantity);
+		dvt.appendChild(inptQuantity);
 		var radioB=document.createElement("input");
         radioB.setAttribute("type","checkbox");
-		newdv.appendChild(radioB);
-		break1(newdv);
+		dvt.appendChild(radioB);
+		break1(dvt);
+		newdv.appendChild(dvt);
+		
 		var cnt=2;
 		
 		an.addEventListener("click",function(){
 			cnt++;
 			if(cnt<=10){
-			var inptQuantity=document.createElement("input");
+	
+		var dvt=document.createElement("div");
+		dvt.setAttribute("id",cnt);
+		var inptQuantity=document.createElement("input");
 		inptQuantity.setAttribute("type","text");
-		inptQuantity.setAttribute("id","option2");
+		inptQuantity.setAttribute("id",1000+cnt);
 		inptQuantity.setAttribute("placeholder","Enter Option");
-		newdv.appendChild(inptQuantity);
+		dvt.appendChild(inptQuantity);
 		var radioB=document.createElement("input");
         radioB.setAttribute("type","checkbox");
-		newdv.appendChild(radioB);
+		dvt.appendChild(radioB);
 		var bt=document.createElement("button");
-		bt.setAttribute("id","dl");
+		bt.setAttribute("id",cnt+100);
 		bt.innerHTML="Delete";
-		newdv.appendChild(bt);
-		document.getElementById("dl").addEventListener("click",function(){
+		dvt.appendChild(bt);
+			break1(dvt);
+		newdv.appendChild(dvt);
+		document.getElementById(cnt+100).addEventListener("click",function(){
+		
+					var target=event.target.parentNode;
+					console.log(target);
+					target.parentNode.removeChild(target); 
 					
 		});
 			}else{
 				alert("You can't enter more than 10 options");
 			}
-			break1(newdv);
+		
 		});
 		
 		div.appendChild(newdv);
 		
 		break1(div);break1(div);break1(div);
- 		var button=document.createElement("Button");
-		button.innerHTML="Add Ques";
-		div.appendChild(button);
+ 		var buttn=document.createElement("Button");
+		buttn.innerHTML="Add Ques";
+		div.appendChild(buttn);
 		break1(div);break1(div);
-		button.addEventListener("click",function(event){
+		buttn.addEventListener("click",function(event){
+			console.log(document.getElementById(1000+0).value);
 				addToArray(); //store values to an array
 				window.location.assign("questions.html");
 		});
